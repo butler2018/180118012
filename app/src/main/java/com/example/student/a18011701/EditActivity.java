@@ -11,13 +11,14 @@ import com.example.student.a18011701.data.Student;
 public class EditActivity extends AppCompatActivity {
     Student s;
     TextView tv1,tv2,tv3;
+
+    int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-
         int id = getIntent().getIntExtra("id",0);
-        s= MainActivity.dao.getStudent(id);
+        s = MainActivity.dao.getStudent(id);
         tv1 = (TextView) findViewById(R.id.textView);
         tv2 = (TextView) findViewById(R.id.textView2);
         tv3 = (TextView) findViewById(R.id.textView3);
@@ -33,16 +34,14 @@ public class EditActivity extends AppCompatActivity {
     }
     public void clickDelete(View v)
     {
-
-
-
+        MainActivity.dao.delete(s.id);
+        Intent it = new Intent(EditActivity.this,MainActivity.class);
+        startActivity(it);
     }
-
-
     public void clickEdit(View v)
     {
         Intent it = new Intent(EditActivity.this,Edit1Activity.class);
-        it.putExtra("id", 0);
+        it.putExtra("id", s.id);
         startActivity(it);
     }
 }

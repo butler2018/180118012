@@ -1,22 +1,34 @@
-package com.example.student.a18011701.data;
+package com.example.student.a18011701;
 
+import com.example.student.a18011701.data.Student;
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Created by Student on 2018/1/17.
  */
 
-public class StudentScoreDAO {
-    public ArrayList<Student> mylist;
+public class StudentScoreDAO extends MainActivity{
+     public ArrayList<Student> mylist;
 
     public StudentScoreDAO() {
+
         mylist = new ArrayList<>();
     }
 
+
+
     public boolean add(Student s) {
         mylist.add(s);
+
+
         return true;
     }
+
 
     public ArrayList<Student> getList() {
         return mylist;

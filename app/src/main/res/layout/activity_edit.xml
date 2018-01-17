@@ -63,7 +63,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="68dp"
-        android:onClick="clickDlete"
+        android:onClick="clickDelete"
         android:text="delete"
         app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintStart_toEndOf="@+id/button2"
