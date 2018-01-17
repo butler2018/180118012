@@ -1,6 +1,7 @@
 package com.example.student.a18011701;
 
 import com.example.student.a18011701.data.Student;
+import com.example.student.a18011701.data.StudentScoreDAO;
 
 import org.junit.Test;
 
