@@ -45,18 +45,21 @@ public class Edit1Activity extends AppCompatActivity {
         builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Student s = new Student(id,ed5.getText().toString(),
-                        Integer.valueOf(ed6.getText().toString()));
+//                Student s = new Student(id,ed5.getText().toString(),
+//                        Integer.valueOf(ed6.getText().toString()));
 
 //                int id = Integer.valueOf(tv4.getText().toString());
 //                String name = ed5.getText().toString();
 //                int score = Integer.valueOf(ed6.getText().toString());
             //    MainActivity.dao.update(new Student(id,name,score));
+                MainActivity.dao.update(new Student(id,ed5.getText().toString(),
+                        Integer.valueOf(ed6.getText().toString())));
+                finish();
 
-                MainActivity.dao.update(s);
-                Intent it = new Intent(Edit1Activity.this,EditActivity.class);
-                it.putExtra("id", id);
-                startActivity(it);
+            //    MainActivity.dao.update(s);
+//                Intent it = new Intent(Edit1Activity.this,EditActivity.class);
+//                it.putExtra("id", id);
+//                startActivity(it);
             }
         });
         builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {

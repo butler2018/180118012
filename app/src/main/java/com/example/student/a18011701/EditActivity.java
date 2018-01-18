@@ -14,20 +14,25 @@ public class EditActivity extends AppCompatActivity {
     Student s;
     TextView tv1,tv2,tv3;
     int id;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        id = getIntent().getIntExtra("id",0);
-        s = MainActivity.dao.getStudent(id);
+
         tv1 = (TextView) findViewById(R.id.textView);
         tv2 = (TextView) findViewById(R.id.textView2);
         tv3 = (TextView) findViewById(R.id.textView3);
+        id = getIntent().getIntExtra("id",0);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        s = MainActivity.dao.getStudent(id);
         tv1.setText(String.valueOf(s.id));
         tv2.setText(s.name);
         tv3.setText(String.valueOf(s.score));
-
     }
 
     public void clickBack(View v){
