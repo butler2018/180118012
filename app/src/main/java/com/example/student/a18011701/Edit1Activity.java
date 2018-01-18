@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.student.a18011701.data.Student;
 
 public class Edit1Activity extends AppCompatActivity {
+    int id;
     Student s;
     TextView tv4;
     EditText ed5,ed6;
@@ -21,7 +22,7 @@ public class Edit1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit1);
 
-        int id = getIntent().getIntExtra("id",0);
+        id = getIntent().getIntExtra("id",0);
         s = MainActivity.dao.getStudent(id);
         tv4 = (TextView) findViewById(R.id.textView4);
         ed5 = (EditText) findViewById(R.id.editText5);
@@ -29,10 +30,7 @@ public class Edit1Activity extends AppCompatActivity {
         tv4.setText(String.valueOf(s.id));
         ed5.setText(s.name);
         ed6.setText(String.valueOf(s.score));
-
-
-
-    }
+  }
     public void clickBBack(View v){
 //        Intent it = new Intent(Edit1Activity.this,EditActivity.class);
 //        it.putExtra("id", s.id);
@@ -40,20 +38,24 @@ public class Edit1Activity extends AppCompatActivity {
           finish();
     }
 
-    public void clickEdit1(View v){
+    public void clickUpdate(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(Edit1Activity.this);
-        builder.setTitle("確認變更");
-        builder.setMessage("確認要變更本筆資料嗎?");
+        builder.setTitle("確認更新");
+        builder.setMessage("確認要更新本筆資料嗎?");
         builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                int id = Integer.valueOf(tv4.getText().toString());
-                String name = ed5.getText().toString();
-                int score = Integer.valueOf(ed6.getText().toString());
+                Student s = new Student(id,ed5.getText().toString(),
+                        Integer.valueOf(ed6.getText().toString()));
 
-                MainActivity.dao.update(new Student(id,name,score));
+//                int id = Integer.valueOf(tv4.getText().toString());
+//                String name = ed5.getText().toString();
+//                int score = Integer.valueOf(ed6.getText().toString());
+            //    MainActivity.dao.update(new Student(id,name,score));
+
+                MainActivity.dao.update(s);
                 Intent it = new Intent(Edit1Activity.this,EditActivity.class);
-                it.putExtra("id", s.id);
+                it.putExtra("id", id);
                 startActivity(it);
             }
         });
@@ -64,11 +66,6 @@ public class Edit1Activity extends AppCompatActivity {
             }
         });
         builder.show();
-
-
-
-
-    }
-
+   }
 
 }

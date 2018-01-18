@@ -56,7 +56,7 @@ public class EditActivity extends AppCompatActivity {
     public void clickEdit(View v)
     {
         Intent it = new Intent(EditActivity.this,Edit1Activity.class);
-        it.putExtra("id", s.id);
+        it.putExtra("id", id);
         startActivity(it);
     }
 }
