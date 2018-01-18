@@ -1,5 +1,7 @@
 package com.example.student.a18011701;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +13,13 @@ import com.example.student.a18011701.data.Student;
 public class EditActivity extends AppCompatActivity {
     Student s;
     TextView tv1,tv2,tv3;
+    int id;
 
-    int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        int id = getIntent().getIntExtra("id",0);
+        id = getIntent().getIntExtra("id",0);
         s = MainActivity.dao.getStudent(id);
         tv1 = (TextView) findViewById(R.id.textView);
         tv2 = (TextView) findViewById(R.id.textView2);
@@ -29,14 +31,27 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void clickBack(View v){
-        Intent it = new Intent(EditActivity.this,MainActivity.class);
-        startActivity(it);
+        finish();
     }
     public void clickDelete(View v)
     {
-        MainActivity.dao.delete(s.id);
-        Intent it = new Intent(EditActivity.this,MainActivity.class);
-        startActivity(it);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
+        builder.setTitle("確認刪除");
+        builder.setMessage("確認要刪除本筆資料嗎?");
+        builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MainActivity.dao.delete(s.id);
+                finish();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        })    ;
+        builder.show();
     }
     public void clickEdit(View v)
     {

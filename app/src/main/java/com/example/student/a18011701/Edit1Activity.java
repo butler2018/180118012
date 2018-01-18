@@ -1,6 +1,8 @@
 package com.example.student.a18011701;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,20 +34,39 @@ public class Edit1Activity extends AppCompatActivity {
 
     }
     public void clickBBack(View v){
-        Intent it = new Intent(Edit1Activity.this,EditActivity.class);
-        it.putExtra("id", s.id);
-        startActivity(it);
+//        Intent it = new Intent(Edit1Activity.this,EditActivity.class);
+//        it.putExtra("id", s.id);
+//        startActivity(it);
+          finish();
     }
 
     public void clickEdit1(View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(Edit1Activity.this);
+        builder.setTitle("確認變更");
+        builder.setMessage("確認要變更本筆資料嗎?");
+        builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                int id = Integer.valueOf(tv4.getText().toString());
+                String name = ed5.getText().toString();
+                int score = Integer.valueOf(ed6.getText().toString());
 
-        int id = Integer.valueOf(tv4.getText().toString());
-        String name = ed5.getText().toString();
-        int score = Integer.valueOf(ed6.getText().toString());
+                MainActivity.dao.update(new Student(id,name,score));
+                Intent it = new Intent(Edit1Activity.this,EditActivity.class);
+                it.putExtra("id", s.id);
+                startActivity(it);
+            }
+        });
+        builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-        MainActivity.dao.update(new Student(id,name,score));
-        Intent it = new Intent(Edit1Activity.this,MainActivity.class);
-        startActivity(it);
+            }
+        });
+        builder.show();
+
+
+
 
     }
 
