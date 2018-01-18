@@ -11,18 +11,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.student.a18011701.data.Student;
+import com.example.student.a18011701.data.StudentFileDAO;
 import com.example.student.a18011701.data.StudentScoreDAO;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    final public static StudentScoreDAO dao = new StudentScoreDAO(); //new 物件
+    public static StudentFileDAO dao;
 
     ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dao = new StudentFileDAO(this); //new 物件
     }
 
 
