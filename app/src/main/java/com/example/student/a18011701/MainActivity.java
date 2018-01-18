@@ -10,21 +10,28 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.student.a18011701.data.DBType;
 import com.example.student.a18011701.data.Student;
+import com.example.student.a18011701.data.StudentDAO;
+import com.example.student.a18011701.data.StudentDAOFactory;
 import com.example.student.a18011701.data.StudentFileDAO;
 import com.example.student.a18011701.data.StudentScoreDAO;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public static StudentFileDAO dao;
-
+    public static StudentDAO dao;
+    DBType dbType;
     ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dao = new StudentFileDAO(this); //new 物件
+
+        dbType = DBType.FILE;
+        dao = StudentDAOFactory.getDAOInstance(this,dbType);
+
+        //dao = new StudentFileDAO(this); //new 物件
     }
 
 

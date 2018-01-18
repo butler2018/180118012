@@ -14,7 +14,8 @@ public class EditActivity extends AppCompatActivity {
     Student s;
     TextView tv1,tv2,tv3;
     int id;
-    @Override
+    boolean fastBack = false; //按back 跳回第一頁
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
@@ -29,6 +30,10 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(fastBack)  //  //判斷=>按back 跳回第一頁
+        {
+            finish();
+        }
         s = MainActivity.dao.getStudent(id);
         tv1.setText(String.valueOf(s.id));
         tv2.setText(s.name);
@@ -62,6 +67,7 @@ public class EditActivity extends AppCompatActivity {
     {
         Intent it = new Intent(EditActivity.this,Edit1Activity.class);
         it.putExtra("id", id);
+        fastBack = true;       //按back 跳回第一頁
         startActivity(it);
     }
 }
