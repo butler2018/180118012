@@ -23,41 +23,47 @@ public class MainActivity extends AppCompatActivity {
     public static StudentDAO dao;
     DBType dbType;
     ListView lv;
+    ArrayList<String> studentNames;
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        dbType = DBType.DB;
+        dbType = DBType.CLOUD; //選擇用哪個服務 => StudentDAOFactory
         dao = StudentDAOFactory.getDAOInstance(this,dbType);
-
         //dao = new StudentFileDAO(this); //new 物件
+        studentNames = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1, studentNames);
+        lv = (ListView) findViewById(R.id.listview);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent it = new Intent(MainActivity.this, EditActivity.class);
+                it.putExtra("id", dao.getList().get(position).id);
+                startActivity(it);
+            }
+        });
     }
-
 
     @Override
     protected void onResume() {   //回此頁顯示項目
         super.onResume();
-        lv = (ListView)findViewById(R.id.listview);
-        ArrayList<String>studentName = new ArrayList<>(); // 讀陣列
-        for (Student s : dao.getList())
-        {
-            studentName.add(s.name);
-        }
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(MainActivity.this
-        ,android.R.layout.simple_list_item_1,studentName); //畫介面
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-               Intent it = new Intent(MainActivity.this,EditActivity.class);
-                it.putExtra("id", dao.getList().get(position).id);
-               startActivity(it);
-            }
-        });
-
+        refreshData();
     }
 
+    public  void refreshData()
+    {
+        studentNames.clear();
+        for(Student s : dao.getList())
+        {
+            studentNames.add(s.name);
+
+        }
+        adapter.notifyDataSetChanged();
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {    //放入main_menu, menu
         getMenuInflater().inflate(R.menu.main_menu, menu);
