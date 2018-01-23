@@ -20,6 +20,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
+ *  1.StudentCloudDAO(final Context context)
+ *  2. ValueEventListener()  => a)onDataChange(DataSnapshot dataSnapshot)  b)onCancelled
+ *  3.  boolean add(Student s)
+ *  4.  void saveFile()
+ *  5.  ArrayList<Student> getList()
+ *  6.  Student getStudent(int id)
+ *  7.  boolean update(Student s)
+ *  8.  boolean delete(int id)
+ *  9.  boolean delete(int id)
+ *
  * Created by Student on 2018/1/18.
  */
 
@@ -28,13 +38,15 @@ public class StudentCloudDAO implements StudentDAO {
     Context context;
     FirebaseDatabase database;
     DatabaseReference myRef;
+
     public StudentCloudDAO(final Context context)
     {
         this.context = context;
-
+        mylist = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("scores");
         myRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -42,6 +54,10 @@ public class StudentCloudDAO implements StudentDAO {
                 String value = dataSnapshot.getValue(String.class);
                 Gson gson = new Gson();
                 mylist = gson.fromJson(value, new TypeToken<ArrayList<Student>>(){}.getType());
+                if (mylist == null)   //若 mylist 為null,new ArrayList
+                {
+                    mylist = new ArrayList<>();
+                }
                 ((MainActivity)context).refreshData();
             }
 
@@ -51,21 +67,21 @@ public class StudentCloudDAO implements StudentDAO {
 
             }
         });
-        if (mylist == null)
-        {
-            mylist = new ArrayList<>();
-        }
+
     }
+
     public boolean add(Student s)
     {
-        if (mylist == null)
+        if (mylist == null)                 //若 mylist 為null,new ArrayList
         {
             mylist = new ArrayList<>();
         }
+
         mylist.add(s);
         saveFile();
         return true;
     }
+
     private void saveFile()
     {
         // Write a message to the database
@@ -80,6 +96,7 @@ public class StudentCloudDAO implements StudentDAO {
     {
         return mylist;
     }
+
     public Student getStudent(int id)
     {
         for (Student s : mylist)
